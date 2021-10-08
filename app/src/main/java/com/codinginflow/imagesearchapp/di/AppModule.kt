@@ -12,13 +12,14 @@ import javax.inject.Singleton
 // module for dagger (instructions)
 @Module
 // we want to have the object available in the lifetime app
-// we want only one retrofit instance (we don't want rest memory)
-// Dagger Hilt done for us (create the components) - ApplicationComponent::class
+// Dagger Hilt done for us (create the components) - ApplicationComponent - Scope of App
+// в каком скопе мы хотим использовать объекты из модуля
 @InstallIn(ApplicationComponent::class)
 object AppModule {
 
     // this method tells dagger how to create the Retrofit object
     @Provides
+    // we want only one retrofit instance (we don't want rest memory)
     @Singleton
     fun provideRetrofit() : Retrofit =
         Retrofit.Builder()
