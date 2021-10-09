@@ -26,7 +26,11 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
-            recyclerView.adapter = adapter
+            recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
+                header = UnsplashPhotoStateAdapter { adapter.retry() },
+                footer = UnsplashPhotoStateAdapter { adapter.retry() }
+            // adapter.retry() - update PagingDataAdapter if error was
+            )
         }
 
         // обозреваем переменную GalleryViewModel - photos (которая изменяется при изменении запроса пользователя)

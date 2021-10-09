@@ -46,7 +46,7 @@ class UnsplashPhotoAdapter :
             binding.apply {
                 Glide.with(itemView)
                     .load(photo.urls.regular)
-                    //.centerCrop()
+                    .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_error)
                     .into(imageView)
