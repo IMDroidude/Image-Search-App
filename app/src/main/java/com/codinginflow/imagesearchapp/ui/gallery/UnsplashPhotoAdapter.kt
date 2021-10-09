@@ -13,7 +13,7 @@ import com.codinginflow.imagesearchapp.databinding.ItemUnsplashPhotoBinding
 
 // PagingDataAdapter - class from Paging library
 // first argument - type of data we want to put into recycler view items
-class UnsplashPhotoAdapter :
+class UnsplashPhotoAdapter (private val listener : onItemClickListener):
     PagingDataAdapter<UnsplashPhoto, UnsplashPhotoAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     // we have to inflate item layout
@@ -38,8 +38,22 @@ class UnsplashPhotoAdapter :
         }
     }
 
-    class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
+    inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                // bindingAdapterPosition - метод, возвращает position (если анимация = -1)
+                if(position != RecyclerView.NO_POSITION){
+                    // если position != -1
+                    val item = getItem(position)
+                    if(item != null){
+                        listener.onItemClick(item)
+                    }
+                }
+            }
+        }
 
         // holder inflate/bind layout
         fun bind(photo: UnsplashPhoto) {
@@ -54,6 +68,11 @@ class UnsplashPhotoAdapter :
                 textViewUserName.text = photo.user.username
             }
         }
+    }
+
+    // Fragment will implemented this interface
+    interface onItemClickListener {
+        fun onItemClick(photo: UnsplashPhoto)
     }
 
     companion object {

@@ -8,14 +8,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.codinginflow.imagesearchapp.R
+import com.codinginflow.imagesearchapp.data.UnsplashPhoto
 import com.codinginflow.imagesearchapp.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 // аннотация для фрагментов, активити и серверов (т.к. у них нет primary constructor)
 @AndroidEntryPoint // for inject ViewModel property
-class GalleryFragment : Fragment(R.layout.fragment_gallery) {
+class GalleryFragment : Fragment(R.layout.fragment_gallery), UnsplashPhotoAdapter.onItemClickListener {
 
     private val viewModel by viewModels<GalleryViewModel>()
 
@@ -27,11 +29,11 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
         _binding = FragmentGalleryBinding.bind(view)
 
-        val adapter = UnsplashPhotoAdapter()
+        val adapter = UnsplashPhotoAdapter(this)
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
-            recyclerView.itemAnimator = null
+            recyclerView.itemAnimator = null // отключили анимацию объектов
             recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
                 header = UnsplashPhotoStateAdapter { adapter.retry() },
                 footer = UnsplashPhotoStateAdapter { adapter.retry() }
@@ -70,6 +72,13 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         }
 
         setHasOptionsMenu(true)
+    }
+
+    override fun onItemClick(photo: UnsplashPhoto) {
+        // GalleryFragmentDirections - автоматически сгенерированный класс плагином
+        // action - из GalleryFragment в DetailsFragment передает объект Parcelable (UnsplashPhoto)
+        val action = GalleryFragmentDirections.actionGalleryFragmentToDetailsFragment(photo)
+        findNavController().navigate(action) // запускаем
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
