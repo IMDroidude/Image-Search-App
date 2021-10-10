@@ -32,7 +32,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery), UnsplashPhotoAdapte
         val adapter = UnsplashPhotoAdapter(this)
 
         binding.apply {
-            recyclerView.setHasFixedSize(true)
+            recyclerView.setHasFixedSize(true) // если изменения адаптера не могут повлиять на размер RV
             recyclerView.itemAnimator = null // отключили анимацию объектов
             recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
                 header = UnsplashPhotoStateAdapter { adapter.retry() },

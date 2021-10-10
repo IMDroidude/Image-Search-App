@@ -46,7 +46,7 @@ class UnsplashPhotoAdapter (private val listener : onItemClickListener):
                 val position = bindingAdapterPosition
                 // bindingAdapterPosition - метод, возвращает position (если анимация = -1)
                 if(position != RecyclerView.NO_POSITION){
-                    // если position != -1
+                    // если position != -1 (есть клик на фото)
                     val item = getItem(position)
                     if(item != null){
                         listener.onItemClick(item)
