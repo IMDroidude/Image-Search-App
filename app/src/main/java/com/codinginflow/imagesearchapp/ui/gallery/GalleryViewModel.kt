@@ -1,24 +1,23 @@
 package com.codinginflow.imagesearchapp.ui.gallery
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.codinginflow.imagesearchapp.data.UnsplashRepository
 
 // @ViewModelInject constructor() - like @Inject constructor in UnsplashRepository
 class GalleryViewModel @ViewModelInject constructor (
-    private val unsplashRepository: UnsplashRepository
+    private val unsplashRepository: UnsplashRepository,
+    @Assisted state: SavedStateHandle // позволяет dagger инициировать новую переменную
     ) : ViewModel() {
 
     companion object{
+        private const val CURRENT_QUERY = "current_query" // key
         private const val DEFAULT_QUERY = "cats"
     }
 
-    // по умолчанию в currentQuery - запрос "cats"
-    private val currentQuery = MutableLiveData(DEFAULT_QUERY)
+    private val currentQuery = state.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
 
     // switchMap срабатывает, когда изменяется значение currentQuery
     // -> далее запуская метод unsplashRepository, передавая актуальный запрос

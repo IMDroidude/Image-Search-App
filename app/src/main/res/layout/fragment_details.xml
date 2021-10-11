@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 tools:src="@drawable/ic_launcher_foreground"
+                tools:layout_height="300dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="4dp"/>
             

@@ -58,7 +58,7 @@ class UnsplashPhotoAdapter (private val listener : onItemClickListener):
         // holder inflate/bind layout
         fun bind(photo: UnsplashPhoto) {
             binding.apply {
-                Glide.with(itemView)
+                Glide.with(itemView) // context view (better use context fragment or activity)
                     .load(photo.urls.regular)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
