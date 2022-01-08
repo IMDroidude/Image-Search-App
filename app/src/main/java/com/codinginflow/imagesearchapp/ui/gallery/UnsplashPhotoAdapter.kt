@@ -6,7 +6,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CenterInside
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.codinginflow.imagesearchapp.R
 import com.codinginflow.imagesearchapp.data.UnsplashPhoto
 import com.codinginflow.imagesearchapp.databinding.ItemUnsplashPhotoBinding
@@ -60,8 +64,10 @@ class UnsplashPhotoAdapter (private val listener : onItemClickListener):
             binding.apply {
                 Glide.with(itemView) // context view (better use context fragment or activity)
                     .load(photo.urls.regular)
-                    .centerCrop()
+                    ///.centerCrop()
+                    .transform(CenterCrop(), RoundedCorners(24))
                     .transition(DrawableTransitionOptions.withCrossFade())
+                    ///.apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
                     .error(R.drawable.ic_error)
                     .into(imageView)
 

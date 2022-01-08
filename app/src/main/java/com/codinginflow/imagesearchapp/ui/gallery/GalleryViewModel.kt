@@ -25,6 +25,8 @@ class GalleryViewModel @ViewModelInject constructor (
     // обозреваем переменную из GalleryFragment
     val photos = currentQuery.switchMap { queryString ->
         unsplashRepository.getSearchResults(queryString).cachedIn(viewModelScope)
+       /* unsplashRepository.getSearchResultsTest(queryString)
+            .asLiveData(viewModelScope.coroutineContext)*/
     }
 
     fun searchPhotos(query: String) {

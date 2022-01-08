@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.codinginflow.imagesearchapp.R
 import com.codinginflow.imagesearchapp.data.UnsplashPhoto
 import com.codinginflow.imagesearchapp.databinding.FragmentGalleryBinding
+import com.codinginflow.imagesearchapp.utils.SpacesItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 // аннотация для фрагментов, активити и серверов (т.к. у них нет primary constructor)
@@ -32,6 +34,8 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery), UnsplashPhotoAdapte
         val adapter = UnsplashPhotoAdapter(this)
 
         binding.apply {
+            recyclerView.addItemDecoration(SpacesItemDecoration(24))
+            recyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
             recyclerView.setHasFixedSize(true) // если изменения адаптера не могут повлиять на размер RV
             recyclerView.itemAnimator = null // отключили анимацию объектов
             recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
